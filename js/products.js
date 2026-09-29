@@ -52,9 +52,9 @@ window.PRODUCTS = [
   {
     id: "creatine",
     image: "images/products/creatine.jpg",
-    name: "Creatine",
+    name: "GLP-3RT",
     category: "All",
-    form: "jar",
+    form: "Vial",
     tint: "rgba(216,20,44,.45)",
     short: "Creatine monohydrate. [X] capsules per bottle.",
     description: "[SUPPLIER DESCRIPTION] Creatine increases physical performance in successive bursts of short-term, high-intensity exercise. The beneficial effect is obtained with a daily intake of 3 g.",
@@ -69,7 +69,7 @@ window.PRODUCTS = [
   {
     id: "protein-capsules",
     image: "images/products/protein-capsules.jpg",
-    name: "Protein Capsules",
+    name: "Tesamorelin",
     category: "All",
     form: "bottle",
     tint: "rgba(216,20,44,.3)",
@@ -85,9 +85,9 @@ window.PRODUCTS = [
   {
     id: "caffeine",
     image: "images/products/caffeine.jpg",
-    name: "Caffeine",
+    name: "Wolverine Stack",
     category: "All",
-    form: "bottle",
+    form: "Vial",
     tint: "rgba(240,56,78,.35)",
     short: "[X] tablets. High caffeine content.",
     // High-caffeine products must carry the statutory warning on the label:
@@ -103,9 +103,9 @@ window.PRODUCTS = [
   {
     id: "electrolyte",
     image: "images/products/electrolyte.jpg",
-    name: "Electrolyte",
+    name: "GHK-CU",
     category: "All",
-    form: "pouch",
+    form: "vial",
     tint: "rgba(200,200,210,.35)",
     short: "Sodium, potassium and magnesium. [X] servings.",
     description: "[SUPPLIER DESCRIPTION — list the minerals and the amount of each per serving.]",
@@ -118,9 +118,9 @@ window.PRODUCTS = [
   {
     id: "vitamin",
     image: "images/products/vitamin.jpg",
-    name: "Vitamin",
+    name: "MOTS-C",
     category: "All",
-    form: "bottle",
+    form: "Vial",
     tint: "rgba(216,20,44,.25)",
     short: "[X] tablets. [X] servings.",
     // Vitamins and minerals have legal maximum levels and must show the
@@ -135,9 +135,9 @@ window.PRODUCTS = [
   {
     id: "sleep",
     image: "images/products/sleep.jpg",
-    name: "Sleep",
+    name: "Melatonin 2",
     category: "All",
-    form: "bottle",
+    form: "Vial",
     tint: "rgba(120,120,130,.35)",
     short: "[X] capsules. [X] servings.",
     // CHECK WITH YOUR SUPPLIER WHAT'S IN THIS.
@@ -156,7 +156,7 @@ window.PRODUCTS = [
     image: "images/products/collagen.jpg",
     name: "Collagen",
     category: "All",
-    form: "jar",
+    form: "Vial",
     tint: "rgba(240,56,78,.25)",
     short: "Hydrolysed collagen. [X] servings.",
     description: "[SUPPLIER DESCRIPTION — say what type and source, e.g. hydrolysed bovine or marine collagen peptides.]",
@@ -167,11 +167,11 @@ window.PRODUCTS = [
     ]
   },
   {
-    id: "omega-3",
+    id: "Omega-3",
     image: "images/products/omega-3.jpg",
-    name: "Omega-3",
+    name: "Bacteriostatic Water",
     category: "All",
-    form: "bottle",
+    form: "Vial",
     tint: "rgba(240,56,78,.3)",
     short: "[X] softgels. [X] servings.",
     description: "[SUPPLIER DESCRIPTION — state the EPA and DHA content per serving. EPA and DHA contribute to the normal function of the heart; the beneficial effect is obtained with a daily intake of 250 mg.]",
