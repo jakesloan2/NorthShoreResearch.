@@ -25,7 +25,7 @@ window.SITE = {
   assurance: {
     stats: [
       { icon: "flask",  value: "Lab tested",   label: "Independent UK lab" },
-      { icon: "search", value: "[PURITY]%",    label: "HPLC verified" },
+      { icon: "search", value: ">99 PURITY%",    label: "HPLC verified" },
       { icon: "truck",  value: "Tracked",      label: "Shipped from the UK" }
     ],
     checks: [
@@ -41,12 +41,12 @@ window.SITE = {
      Set required: false to make it optional, or remove the whole block
      to drop the question entirely. */
   buyerTypes: {
-    heading: "About you",
+    heading: "Researcher Details",
     label: "Are you buying as",
     required: true,
-    options: ["Personal", "Gym owner", "Distributor"],
+    options: ["Private Researcher", "Univeristy", "Distributor"],
     // Options that reveal an optional business name field
-    businessOptions: ["Gym owner", "Distributor"],
+    businessOptions: ["Univeristy", "Distributor"],
     note: "Trade customers: tell us your business name and we'll be in touch about trade pricing."
   },
 
@@ -58,7 +58,11 @@ window.SITE = {
   /* Footer text — edit to match what you actually sell. */
   footerBlurb: "Placeholder footer text. Replace with a line about your business.",
   footerNote: "",                                  // small print under the footer; leave "" to hide
-
+  /* Disclaimer block below the footer. Set heading to "" to hide it. */
+  footerDisclaimer: {
+    heading: "Caffeine and food supplements",
+    body: "Products on this site are food supplements, not medicines, and are intended for adults. Food supplements should not be used as a substitute for a varied and balanced diet and a healthy lifestyle. Do not exceed the stated dose. Products containing caffeine carry the statutory warning on the label: 'High caffeine content. Not recommended for children or pregnant or breast-feeding women', with the caffeine content stated per serving. If you are pregnant, breast-feeding, taking medication or under medical supervision, speak to a doctor or pharmacist before use. Always read the label. Keep out of reach of children."
+  },
   /* Service promises shown on the site. Only state what is true for
      your business — these appear as facts to customers. */
   promises: {
