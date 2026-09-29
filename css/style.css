@@ -348,6 +348,10 @@ p { margin: 0 0 1em; }
 .footer .logo small { color: #9A9AA4; }
 .footer__brand p { max-width: 320px; margin-top: 12px; }
 .footer__bottom { border-top: 1px solid rgba(255,255,255,.12); margin-top: 40px; padding-top: 20px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; font-size: .8rem; color: #7F8DA3; }
+.footer__disclaimer { border-top: 1px solid rgba(255,255,255,.12); margin-top: 28px; padding: 32px 0 8px; }
+.footer__disclaimer h4 { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: #C9C9D1; margin: 0 0 14px; }
+.footer__disclaimer p { font-size: .82rem; line-height: 1.75; color: #7F8DA3; margin: 0; max-width: 78ch; }
+.footer__disclaimer a { color: #C9C9D1; }
 .payments { display: flex; gap: 6px; flex-wrap: wrap; }
 .payments span { border: 1px solid rgba(255,255,255,.2); border-radius: 4px; padding: 3px 8px; font-size: .68rem; letter-spacing: .06em; color: #D6D6DC; }
 
