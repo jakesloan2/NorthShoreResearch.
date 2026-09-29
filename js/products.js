@@ -74,7 +74,7 @@ window.PRODUCTS = [
     form: "vial",
     tint: "rgba(216,20,44,.3)",
     short: "Molecular formula - C₂₂₁H₃₆₆N₇₂O₆₇S.",
-    description: "[TESAMORELIN is a stabilized analog of Growth Hormone-Releasing Factor (GRF). Research applications involve the study of its selective action on growth hormone secretion and its impact on visceral adipose tissue metabolism. It is frequently used to observe the regulation of the IGF-1 axis and the lipolytic response in metabolic syndrome laboratory models..",
+    description: "TESAMORELIN is a stabilized analog of Growth Hormone-Releasing Factor (GRF). Research applications involve the study of its selective action on growth hormone secretion and its impact on visceral adipose tissue metabolism. It is frequently used to observe the regulation of the IGF-1 axis and the lipolytic response in metabolic syndrome laboratory models..",
     badges: ["Best seller"],
     options: { Strength: ["10 mg", "20 mg"] },
     variants: [
@@ -125,7 +125,7 @@ window.PRODUCTS = [
     short: "Molecular formula - C₁₀₁H₁₅₂N₂₈O₂₂S₂.",
     // Vitamins and minerals have legal maximum levels and must show the
     // % NRV per serving on the label. Take these from your supplier.
-    description: "MOTS-c (Mitochondrial Open Reading Frame of the 12S rRNA-c) is a 16-amino acid peptide encoded by the mitochondrial genome rather than the cell nucleus. In laboratory settings, it is studied as a "mitokine" that facilitates mitochondrial-nuclear communication. Research primarily explores its role in activating the AMPK pathway, modulating the folate-methionine cycle, and its influence on metabolic homeostasis and cellular stress resistance in various animal and in vitro models.",
+    description: "MOTS-c (Mitochondrial Open Reading Frame of the 12S rRNA-c) is a 16-amino acid peptide encoded by the mitochondrial genome rather than the cell nucleus. In laboratory settings, it is studied as a mitokine that facilitates mitochondrial-nuclear communication. Research primarily explores its role in activating the AMPK pathway, modulating the folate-methionine cycle, and its influence on metabolic homeostasis and cellular stress resistance in various animal and in vitro models.",
     badges: [],
     options: { Strength: ["10 mg"] },
     variants: [
