@@ -56,14 +56,14 @@ window.PRODUCTS = [
     category: "All",
     form: "Vial",
     tint: "rgba(216,20,44,.45)",
-    short: "Creatine monohydrate. [X] capsules per bottle.",
-    description: "[SUPPLIER DESCRIPTION] Creatine increases physical performance in successive bursts of short-term, high-intensity exercise. The beneficial effect is obtained with a daily intake of 3 g.",
+    short: "Molecular formula - C₂₂₁H₃₄₂N₅₆O₆₈.",
+    description: "GLP-3RT is a synthetic peptide that acts as a triple agonist, targeting the Glucagon-like peptide-1 (GLP-1), Glucose-dependent insulinotropic polypeptide (GIP), and Glucagon (GCG) receptors. In laboratory research, it is utilized to study the potentiation of metabolic signaling and the regulation of nutrient-stimulated hormone secretion. Studies focus on its efficacy in modulating glucose homeostasis and observing the synergistic effects of triple-receptor activation on lipid metabolism in experimental models.",
     badges: ["Best seller"],
-    options: { Strength: ["1000 mg", "3000 mg", "5000 mg"] },
+    options: { Strength: ["10 mg", "20 mg", "30 mg"] },
     variants: [
-      { sku: "CRE-1000MG", options: { Strength: "1000 mg" }, price: 14.99, stock: 40, image: "images/products/creatine-1000mg.jpg" },
-      { sku: "CRE-3000MG", options: { Strength: "3000 mg" }, price: 19.99, stock: 30, image: "images/products/creatine-3000mg.jpg" },
-      { sku: "CRE-5000MG", options: { Strength: "5000 mg" }, price: 24.99, stock: 20, image: "images/products/creatine-5000mg.jpg" }
+      { sku: "CRE-1000MG", options: { Strength: "10 mg" }, price: 59.99, stock: 40, image: "images/products/creatine-1000mg.jpg" },
+      { sku: "CRE-3000MG", options: { Strength: "20 mg" }, price: 109.99, stock: 30, image: "images/products/creatine-3000mg.jpg" },
+      { sku: "CRE-5000MG", options: { Strength: "30 mg" }, price: 159.99, stock: 20, image: "images/products/creatine-5000mg.jpg" }
     ]
   },
   {
@@ -71,15 +71,15 @@ window.PRODUCTS = [
     image: "images/products/protein-capsules.jpg",
     name: "Tesamorelin",
     category: "All",
-    form: "bottle",
+    form: "vial",
     tint: "rgba(216,20,44,.3)",
-    short: "Protein in capsule form. [X] capsules per bottle.",
-    description: "[SUPPLIER DESCRIPTION] Protein contributes to a growth in muscle mass and to the maintenance of normal bones.",
+    short: "Molecular formula - C₂₂₁H₃₆₆N₇₂O₆₇S.",
+    description: "[TESAMORELIN is a stabilized analog of Growth Hormone-Releasing Factor (GRF). Research applications involve the study of its selective action on growth hormone secretion and its impact on visceral adipose tissue metabolism. It is frequently used to observe the regulation of the IGF-1 axis and the lipolytic response in metabolic syndrome laboratory models..",
     badges: ["Best seller"],
-    options: { Strength: ["500 mg", "1000 mg"] },
+    options: { Strength: ["10 mg", "20 mg"] },
     variants: [
-      { sku: "PRO-500MG",  options: { Strength: "500 mg" },  price: 24.99, stock: 40, image: "images/products/protein-capsules-500mg.jpg" },
-      { sku: "PRO-1000MG", options: { Strength: "1000 mg" }, price: 39.99, stock: 25, image: "images/products/protein-capsules-1000mg.jpg" }
+      { sku: "PRO-500MG",  options: { Strength: "10 mg" },  price: 69.99, stock: 40, image: "images/products/protein-capsules-500mg.jpg" },
+      { sku: "PRO-1000MG", options: { Strength: "20 mg" }, price: 129.99, stock: 25, image: "images/products/protein-capsules-1000mg.jpg" }
     ]
   },
   {
@@ -89,15 +89,15 @@ window.PRODUCTS = [
     category: "All",
     form: "Vial",
     tint: "rgba(240,56,78,.35)",
-    short: "[X] tablets. High caffeine content.",
+    short: "Molecular formula - Variable (BPC-157 / TB-500 Complex)",
     // High-caffeine products must carry the statutory warning on the label:
     // "High caffeine content. Not recommended for children or pregnant or
     // breast-feeding women", with the amount in mg per serving.
-    description: "[SUPPLIER DESCRIPTION] High caffeine content. Not recommended for children or pregnant or breast-feeding women.",
+    description: "The Wolverine Blend is a high-concentration research complex combining Pentadecapeptide BPC-157 and Thymosin Beta-4 (TB-500). This formulation is designed to study the synergistic interaction between angiogenic signaling and actin-sequestering pathways. Researchers utilize this blend to observe accelerated cellular migration and the structural repair of musculoskeletal tissue models in vitro.",
     badges: [],
-    options: { Strength: ["200 mg"] },
+    options: { Strength: ["10/10 mg"] },
     variants: [
-      { sku: "CAF-200MG", options: { Strength: "200 mg" }, price: 11.99, stock: 50 }
+      { sku: "CAF-200MG", options: { Strength: "10/10 mg" }, price: 39.99, stock: 50 }
     ]
   },
   {
