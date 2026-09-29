@@ -106,8 +106,6 @@ window.UI = (() => {
           </div>
           ${SITE.footerNote ? `<p class="note mt-2">${SITE.footerNote}</p>` : ""}
         </div>
-                  ${SITE.footerNote ? `<p class="note mt-2">${SITE.footerNote}</p>` : ""}
-        </div>
         ${SITE.footerDisclaimer && SITE.footerDisclaimer.heading ? `
         <div class="footer__disclaimer">
           <div class="container">
@@ -115,7 +113,6 @@ window.UI = (() => {
             <p>${SITE.footerDisclaimer.body}</p>
           </div>
         </div>` : ""}
-      </footer>`;
       </footer>`;
   }
 
