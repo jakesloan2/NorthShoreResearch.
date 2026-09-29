@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My account | North Shore</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Sign in to view your orders and saved details.">
+  <link rel="icon" href="assets/favicon.png" type="image/png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><meta name="theme-color" content="#0A0A0C">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="main">
+  <div class="page-head"><div class="container"><div class="crumbs"><a href="index.html">Home</a> / My account</div><h1>My account</h1></div></div>
+
+<div class="container" style="padding:40px 0 80px;max-width:520px">
+  <div class="panel">
+    <h3>Sign in</h3>
+    <p class="muted">Accounts are handled by your commerce platform (Shopify customer accounts or Stripe customer portal). This page links to it once configured.</p>
+    <div class="form-grid">
+      <div class="field full"><label for="a-email">Email</label><input id="a-email" type="email" autocomplete="email"></div>
+      <div class="field full"><label for="a-pass">Password</label><input id="a-pass" type="password" autocomplete="current-password"></div>
+    </div>
+    <button class="btn btn--primary btn--block btn--lg mt-2" type="button" onclick="UI.toast('Connect this to your Shopify or Stripe customer portal — see README.', 'info')">Sign in</button>
+    <p class="note text-center mt-2">New here? <a href="#"><u>Create an account</u></a> · <a href="#"><u>Forgotten password</u></a></p>
+  </div>
+  <p class="note mt-3">You can always check out as a guest — an account just saves your details and shows order history.</p>
+</div>
+
+</main>
+<script src="js/config.js"></script><script src="js/products.js"></script><script src="js/discounts.js"></script>
+<script src="js/cart.js"></script><script src="js/cookies.js"></script><script src="js/main.js"></script>
+<script src="js/age-gate.js"></script><script src="js/offer.js"></script>
+
+</body>
+</html>

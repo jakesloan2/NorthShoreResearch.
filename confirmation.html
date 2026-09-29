@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order confirmed | North Shore</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="assets/favicon.png" type="image/png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><meta name="theme-color" content="#0A0A0C">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="main">
+  <div class="container confirm" id="confirm"></div>
+</main>
+<script src="js/config.js"></script><script src="js/products.js"></script><script src="js/discounts.js"></script>
+<script src="js/cart.js"></script><script src="js/cookies.js"></script><script src="js/main.js"></script>
+<script src="js/age-gate.js"></script><script src="js/offer.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const el = document.getElementById("confirm");
+  let o = null; try { o = JSON.parse(sessionStorage.getItem("ns_last_order")); } catch {}
+  const sessionId = new URLSearchParams(location.search).get("session_id"); // Stripe returns here with ?session_id=
+  if (!o && !sessionId) { el.innerHTML = `<h1>Nothing to show</h1><p class="muted">We couldn't find a recent order in this browser.</p><a class="btn btn--primary" href="shop.html">Back to shop</a>`; return; }
+  const ref = o ? o.ref : "Confirmed";
+  const esc = v => String(v ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const demo = o && SITE.payment.mode === "demo";
+  const where = o && `<strong>Deliver to</strong>${esc(o.customer.first)} ${esc(o.customer.last)}<br>${esc(o.address.line1)}${o.address.line2 ? ", " + esc(o.address.line2) : ""}<br>${esc(o.address.city)} ${esc(o.address.postcode)}`;
+  el.innerHTML = `
+    <div class="tick">${UI.icons.check}</div>
+    ${demo ? '<div class="callout callout--warn" style="text-align:left">Demo mode: no payment was taken and no email was sent. Set <code>SITE.payment.mode</code> in <code>js/config.js</code> to go live.</div>' : ""}
+    <h1>Thanks — your order is confirmed</h1>
+    <p class="muted">Order <strong>${ref}</strong>. A confirmation email is on its way${o ? ` to <strong>${esc(o.customer.email)}</strong>` : ""}. We'll send tracking details as soon as it's dispatched.</p>
+    ${o ? `
+    <div class="panel order-box">
+      <div class="kv">
+        <div>${where}</div>
+        <div><strong>Delivery</strong>${o.shippingLabel}<br>${o.eta}</div>
+        ${o.buyerType ? `<div><strong>Buying as</strong>${esc(o.buyerType)}${o.business ? `<br>${esc(o.business)}` : ""}</div>` : ""}
+        ${o.methodLabel ? `<div><strong>Paid with</strong>${esc(o.methodLabel)}${o.paymentChoice ? `<br>${esc(o.paymentChoice)}` : ""}</div>` : ""}
+      </div>
+      ${o.items.map(i => `<div class="line" style="grid-template-columns:1fr auto"><div><div class="line__title">${i.name}</div><div class="line__variant">${Object.values(i.options).join(" · ")} · Qty ${i.qty}</div></div><div class="line__price">${Cart.money(i.unitPrice * i.qty)}</div></div>`).join("")}
+      <div class="totals mt-2">
+        <div><span>Subtotal</span><span>${Cart.money(o.totals.subtotal)}</span></div>
+        ${o.totals.discount ? `<div class="discount"><span>Discount (${o.coupon})</span><span>−${Cart.money(o.totals.discount)}</span></div>` : ""}
+        ${o.totals.payDiscount ? `<div class="discount"><span>${esc(o.methodLabel)} discount</span><span>−${Cart.money(o.totals.payDiscount)}</span></div>` : ""}
+        <div><span>Delivery</span><span>${o.totals.shipping ? Cart.money(o.totals.shipping) : "Free"}</span></div>
+        <div class="grand"><span>${demo ? "Order total" : "Total paid"}</span><span>${Cart.money(o.totals.total)}</span></div>
+      </div>
+    </div>` : ""}
+    ${o && o.payment === "bitcoin" ? `<div class="callout" style="text-align:left"><strong>Paying in Bitcoin</strong><br>Your payment details will be sent to ${esc(o.customer.email)}. The order is reserved for 30 minutes at the quoted rate, and we dispatch once the payment is confirmed on the blockchain.</div>` : ""}
+    <p class="note mt-3">Questions about your order? <a href="contact.html"><u>Contact us</u></a> quoting your order number.</p>
+    <a class="btn btn--primary mt-2" href="shop.html">Continue shopping</a>`;
+});
+</script>
+</body>
+</html>

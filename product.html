@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Product | North Shore</title>
+  <link rel="canonical" href="https://YOUR-DOMAIN.co.uk/product.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="North Shore Research">
+  <meta property="og:url" content="https://YOUR-DOMAIN.co.uk/product.html">
+  <meta property="og:title" content="Product | North Shore">
+  <meta property="og:description" content="">
+  <meta property="og:image" content="https://YOUR-DOMAIN.co.uk/images/social-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="North Shore Research">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Product | North Shore">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="https://YOUR-DOMAIN.co.uk/images/social-card.jpg">
+  <meta name="description" content="">
+  <link rel="icon" href="assets/favicon.png" type="image/png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><meta name="theme-color" content="#0A0A0C">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="main">
+  <div class="container product" id="product"></div>
+  <section class="section section--tight" style="background:#fff;border-top:1px solid var(--line)">
+    <div class="container">
+      <div class="section-head"><span class="eyebrow">You might also like</span><h2 class="mb-0">Related products</h2></div>
+      <div class="grid grid--4" id="related"></div>
+    </div>
+  </section>
+</main>
+
+<script src="js/config.js"></script><script src="js/products.js"></script><script src="js/discounts.js"></script>
+<script src="js/cart.js"></script><script src="js/cookies.js"></script><script src="js/main.js"></script><script src="js/coa.js"></script>
+<script src="js/age-gate.js"></script><script src="js/offer.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const id = new URLSearchParams(location.search).get("id");
+  const root = document.getElementById("product");
+  // An unknown id means a renamed or deleted product, or a bad link. Say so
+  // rather than quietly showing a different product.
+  const p = PRODUCTS.find(x => x.id === id) || (id ? null : PRODUCTS[0]);
+  if (!p) {
+    document.title = "Product not found | " + SITE.name;
+    root.innerHTML = `<div class="panel empty" style="grid-column:1/-1">
+      <h1 style="font-size:1.6rem">We couldn't find that product</h1>
+      <p class="muted">It may have been renamed or is no longer stocked.</p>
+      <a class="btn btn--primary" href="shop.html">Browse all products</a></div>`;
+    document.querySelector(".section--tight").remove();
+    return;
+  }
+  const I = UI.icons;
+  const coas = (window.COAS || []).filter(c => c.product === p.id);
+  // Per-product assurance block, falling back to the site-wide one in config.js
+  const assurance = p.assurance || SITE.assurance || {};
+  const L = p.label || null;   // legally required product information
+  const optNames = Object.keys(p.options);
+  const sel = {}; optNames.forEach(n => sel[n] = p.options[n][0]);
+  // Pick the first in-stock variant as default
+  const firstIn = p.variants.find(v => v.stock > 0); if (firstIn) Object.assign(sel, firstIn.options);
+  let qty = 1;
+
+  document.title = `${p.name} | ${SITE.name}`;
+  const setMeta = (sel, val) => { const el = document.querySelector(sel); if (el) el.content = val; };
+  setMeta("meta[name=description]", p.short);
+  // Share cards should show this product, not the generic site card
+  const pageUrl = location.href.split("#")[0];
+  const img = new URL(p.image || "images/social-card.jpg", location.href).href;
+  setMeta('meta[property="og:title"]', p.name);
+  setMeta('meta[property="og:description"]', p.short);
+  setMeta('meta[property="og:image"]', img);
+  setMeta('meta[property="og:url"]', pageUrl);
+  setMeta('meta[name="twitter:title"]', p.name);
+  setMeta('meta[name="twitter:description"]', p.short);
+  setMeta('meta[name="twitter:image"]', img);
+  const canon = document.querySelector('link[rel=canonical]'); if (canon) canon.href = pageUrl;
+  document.querySelector('meta[property="og:type"]')?.setAttribute("content", "product");
+  const ld = document.createElement("script"); ld.type = "application/ld+json";
+  ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "Product", name: p.name, description: p.description, brand: { "@type": "Brand", name: "North Shore" }, sku: p.variants[0].sku,
+    offers: { "@type": "AggregateOffer", priceCurrency: "GBP", lowPrice: Math.min(...p.variants.map(v => v.price)), highPrice: Math.max(...p.variants.map(v => v.price)), offerCount: p.variants.length, availability: "https://schema.org/InStock" } });
+  document.head.appendChild(ld);
+
+  function variant() { return p.variants.find(v => optNames.every(n => v.options[n] === sel[n])); }
+  function available(n, val) { return p.variants.some(v => v.options[n] === val && optNames.every(m => m === n || v.options[m] === sel[m]) && v.stock > 0); }
+
+  function render() {
+    const v = variant();
+    const stock = v ? v.stock : 0;
+    const stockCls = stock === 0 ? "out" : stock <= 5 ? "low" : "";
+    const stockTxt = stock === 0 ? "Out of stock" : stock <= 5 ? `Only ${stock} left` : "In stock";
+    root.innerHTML = `
+      <div class="product__gallery">
+        <div class="product__main">${Cart.tile(p, "", v)}</div>
+        <div class="product__thumbs" role="tablist" aria-label="Product images">
+          <button role="tab" aria-selected="true" aria-label="Image 1">${Cart.tile(p, "", v)}</button>
+        </div>
+      </div>
+      <div>
+        <div class="crumbs"><a href="index.html">Home</a> / <a href="shop.html">Shop</a></div>
+        <div class="pill-row" style="margin-bottom:10px">${p.badges.map(b => `<span class="badge ${b === "Batch tested" ? "badge--success" : b === "New" ? "badge--accent" : ""}">${b}</span>`).join("")}</div>
+        <h1 class="product__title">${p.name}</h1>
+        ${SITE.showSku === true ? `<div class="muted">SKU ${v ? v.sku : "—"}</div>` : ""}
+        <div class="product__price">${v ? Cart.money(v.price) : "—"}${v && v.wasPrice ? `<span class="price--was">${Cart.money(v.wasPrice)}</span>` : ""}<small>inc. VAT</small></div>
+        <div class="product__stock ${stockCls}">${stockTxt}</div>
+        <p>${p.description}</p>
+
+        ${optNames.map(n => `
+          <div class="opt">
+            <div class="opt__label">${n} <span>${sel[n]}</span></div>
+            <div class="opt__list" role="group" aria-label="${n}">
+              ${p.options[n].map(val => `<button type="button" class="opt__btn" data-opt="${n}" data-val="${val}" aria-pressed="${sel[n] === val}" ${available(n, val) ? "" : "disabled"}>${val}</button>`).join("")}
+            </div>
+          </div>`).join("")}
+
+        <div class="buy-row">
+          <div class="qty" aria-label="Quantity">
+            <button type="button" id="dec" aria-label="Decrease quantity">−</button>
+            <input type="number" id="qty" min="1" max="${Math.max(1, stock)}" value="${qty}" aria-label="Quantity">
+            <button type="button" id="inc" aria-label="Increase quantity">+</button>
+          </div>
+          <button class="btn btn--primary btn--lg" id="add" ${stock === 0 ? "disabled" : ""}>${stock === 0 ? "Sold out" : "Add to basket"}</button>
+        </div>
+        <button class="btn btn--accent btn--block btn--lg" id="buynow" ${stock === 0 ? "disabled" : ""}>Buy now</button>
+
+        <div class="product__perks">
+          <div>${I.truck} Free UK delivery over ${Cart.money(SITE.shipping.freeThreshold)}</div>
+          <div>${I.shield} Secure checkout</div>
+          <div>${I.return} ${SITE.promises.returns}</div>
+          <div>${I.check} ${SITE.promises.dispatch}</div>
+        </div>
+
+        ${assurance.stats && assurance.stats.length ? `
+        <div class="assure">
+          ${assurance.stats.map(st => `
+            <div class="assure__stat">
+              <span class="assure__icon">${I[st.icon] || I.check}</span>
+              <strong>${st.value}</strong>
+              <span class="assure__label">${st.label}</span>
+            </div>`).join("")}
+        </div>` : ""}
+
+        ${assurance.checks && assurance.checks.length ? `
+        <div class="assure__checks">
+          ${assurance.checks.map(c => `
+            <div class="assure__check ${c.pass ? "is-pass" : "is-pending"}">
+              <span class="assure__tick">${c.pass ? I.check : I.search}</span>
+              <div><span class="assure__verdict">${c.pass ? "Passed" : "Pending"}</span><strong>${c.label}</strong></div>
+            </div>`).join("")}
+        </div>` : ""}
+
+        <div class="tabs">
+          ${L ? `<details open><summary>Product information</summary><div class="tabs__body">
+            ${L.ingredients ? `<p><strong>Ingredients:</strong> ${L.ingredients}</p>` : ""}
+            ${L.allergens ? `<p><strong>Allergens:</strong> ${L.allergens}</p>` : ""}
+            ${L.nutrition && L.nutrition.length ? `<table class="nutrition"><thead><tr><th>Per ${L.serving || "serving"}</th><th></th></tr></thead><tbody>${L.nutrition.map(([k, v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join("")}</tbody></table>` : ""}
+            ${L.directions ? `<p class="mt-2"><strong>How to use:</strong> ${L.directions}</p>` : ""}
+            <p class="note">Always read the label on the product you receive. ${p.category === "Skincare" ? "For external use only." : "Food supplements should not be used as a substitute for a varied, balanced diet and a healthy lifestyle. Do not exceed the stated dose."}</p>
+          </div></details>` : ""}
+          ${coas.length ? `<details open><summary>Batch certificates (${coas.length})</summary><div class="tabs__body"><ul class="batch-list">${coas.map(c => `<li><a href="coa.html?batch=${c.batch}"><u>Batch ${c.batch}</u></a><span class="muted"> · tested ${new Date(c.tested).toLocaleDateString("en-GB", { month: "short", year: "numeric" })}${c.sample ? " · sample" : ""}</span></li>`).join("")}</ul><p class="note">Match the batch number printed on your pack.</p></div></details>` : ""}
+          <details><summary>Delivery & returns</summary><div class="tabs__body"><p>${SITE.promises.dispatch}.</p><ul>${SITE.shipping.options.map(o => `<li>${o.label}: ${o.eta} — ${o.price === 0 ? "free" : Cart.money(o.price)}${o.id === "standard" ? ` (free over ${Cart.money(SITE.shipping.freeThreshold)})` : ""}</li>`).join("")}</ul><p>${SITE.promises.returns}. <a href="returns.html"><u>Returns policy</u></a>.</p></div></details>
+        </div>
+      </div>`;
+  }
+
+  root.addEventListener("click", e => {
+    const ob = e.target.closest("[data-opt]");
+    if (ob && !ob.disabled) { sel[ob.dataset.opt] = ob.dataset.val; render(); return; }
+    if (e.target.id === "inc") { qty = Math.min(qty + 1, variant()?.stock || 1); render(); }
+    if (e.target.id === "dec") { qty = Math.max(1, qty - 1); render(); }
+    if (e.target.id === "add" || e.target.id === "buynow") {
+      const v = variant(); if (!v) return;
+      if (Cart.add(p.id, v.sku, qty)) {
+        if (e.target.id === "buynow") location.href = "checkout.html";
+        else { UI.toast(`${p.name} added to basket`, "success"); UI.open("cart"); }
+      }
+    }
+  });
+  root.addEventListener("change", e => { if (e.target.id === "qty") { qty = Math.max(1, parseInt(e.target.value || "1", 10)); render(); } });
+  render();
+
+  const rel = PRODUCTS.filter(x => x.id !== p.id).slice(0, 4);
+  document.getElementById("related").innerHTML = rel.map(UI.productCard).join("");
+});
+</script>
+</body>
+</html>

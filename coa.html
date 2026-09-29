@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Batch certificates | North Shore</title>
+  <link rel="canonical" href="https://YOUR-DOMAIN.co.uk/coa.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="North Shore Research">
+  <meta property="og:url" content="https://YOUR-DOMAIN.co.uk/coa.html">
+  <meta property="og:title" content="Batch certificates | North Shore">
+  <meta property="og:description" content="Search certificates of analysis by product and batch number.">
+  <meta property="og:image" content="https://YOUR-DOMAIN.co.uk/images/social-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="North Shore Research">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Batch certificates | North Shore">
+  <meta name="twitter:description" content="Search certificates of analysis by product and batch number.">
+  <meta name="twitter:image" content="https://YOUR-DOMAIN.co.uk/images/social-card.jpg">
+  <meta name="description" content="Search certificates of analysis by product and batch number.">
+  <link rel="icon" href="assets/favicon.png" type="image/png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><meta name="theme-color" content="#0A0A0C">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="main">
+  <div class="page-head"><div class="container"><div class="crumbs"><a href="index.html">Home</a> / Batch certificates</div><h1>Batch certificates</h1><p class="muted mb-0">Search → product → batch → certificate.</p></div></div>
+
+<div class="container coa-page">
+  <div class="coa-search panel">
+    <div class="field"><label for="coa-q">Batch number or product</label><input id="coa-q" type="search" placeholder="e.g. WPI-2409A" autocomplete="off"></div>
+    <div class="field"><label for="coa-product">Product</label><select id="coa-product"><option value="">All products</option></select></div>
+  </div>
+  <p class="note" id="coa-count" aria-live="polite"></p>
+  <div id="coa-list" class="coa-list"></div>
+  <div class="callout mt-3"><strong>Finding your batch.</strong> The batch number is printed next to the best-before date on the base or back of the pack. If you can't find a certificate for your batch, <a href="contact.html"><u>contact us</u></a> and we'll tell you what testing that batch had.</div>
+</div>
+
+<div class="modal" id="coa-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="coa-title">
+  <div class="modal__backdrop" data-close></div>
+  <div class="modal__panel modal__panel--wide" id="coa-view"></div>
+</div>
+</main>
+<script src="js/config.js"></script><script src="js/products.js"></script><script src="js/discounts.js"></script>
+<script src="js/cart.js"></script><script src="js/cookies.js"></script><script src="js/main.js"></script>
+<script src="js/age-gate.js"></script><script src="js/offer.js"></script>
+<script src="js/coa.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const q = document.getElementById("coa-q"), sel = document.getElementById("coa-product");
+  const list = document.getElementById("coa-list"), count = document.getElementById("coa-count");
+  const modal = document.getElementById("coa-modal"), view = document.getElementById("coa-view");
+  const prod = id => PRODUCTS.find(p => p.id === id) || { name: id, category: "" };
+  const fmt = d => new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  const ids = [...new Set(COAS.map(c => c.product))];
+  sel.innerHTML += ids.map(id => `<option value="${id}">${prod(id).name}</option>`).join("");
+  const params = new URLSearchParams(location.search);
+  if (params.get("product")) sel.value = params.get("product");
+  if (params.get("batch")) q.value = params.get("batch");
+
+  function render() {
+    const term = q.value.trim().toLowerCase();
+    const rows = COAS.filter(c => (!sel.value || c.product === sel.value) &&
+      (!term || c.batch.toLowerCase().includes(term) || prod(c.product).name.toLowerCase().includes(term)))
+      .sort((a, b) => b.tested.localeCompare(a.tested));
+    count.textContent = `${rows.length} certificate${rows.length === 1 ? "" : "s"}`;
+    list.innerHTML = rows.length ? rows.map(c => `
+      <button type="button" class="coa-card" data-batch="${c.batch}">
+        <div class="coa-card__tile">${Cart.tile(prod(c.product))}</div>
+        <div class="coa-card__body">
+          <span class="coa-card__product">${prod(c.product).name}${c.sample ? ' <span class="badge badge--light">Sample</span>' : ""}</span>
+          <span class="coa-card__batch">Batch ${c.batch}</span>
+          <span class="coa-card__meta">Tested ${fmt(c.tested)} · ${c.results.length} tests · ${c.results.every(r => r[3]) ? "All within specification" : "See results"}</span>
+        </div>
+        <span class="coa-card__cta">View</span>
+      </button>`).join("") : `<div class="panel empty"><p>No certificate matches “${q.value}”.</p></div>`;
+  }
+  function open(batch) {
+    const c = COAS.find(x => x.batch === batch); if (!c) return;
+    const p = prod(c.product);
+    view.innerHTML = `
+      <button class="icon-btn modal__close" data-close aria-label="Close certificate">${UI.icons.close}</button>
+      <span class="eyebrow">Certificate of analysis</span>
+      <h3 id="coa-title">${p.name} — batch ${c.batch}</h3>
+      ${c.sample ? '<div class="callout callout--warn">Sample certificate for the website design. It is not a real test result.</div>' : ""}
+      <div class="kv mt-2">
+        <div><strong>Batch</strong>${c.batch}</div><div><strong>Best before</strong>${fmt(c.expiry)}</div>
+        <div><strong>Reported</strong>${fmt(c.tested)}</div><div><strong>Laboratory</strong>${c.lab}</div>
+      </div>
+      <p class="note"><strong>Methods:</strong> ${c.method}</p>
+      <div class="table-wrap"><table class="nutrition coa-table"><thead><tr><th>Test</th><th>Specification</th><th>Result</th><th>Status</th></tr></thead><tbody>
+        ${c.results.map(([t, s, r, ok]) => `<tr><td>${t}</td><td>${s}</td><td>${r}</td><td><span class="status ${ok ? "status--ok" : "status--bad"}">${ok ? "Pass" : "Fail"}</span></td></tr>`).join("")}
+      </tbody></table></div>
+      <div class="step-actions">
+        ${c.pdf ? `<a class="btn btn--primary" href="${c.pdf}" target="_blank" rel="noopener">Open PDF certificate</a>` : '<span class="note">PDF certificate not yet uploaded.</span>'}
+        <a class="btn btn--secondary" href="product.html?id=${c.product}">View product</a>
+      </div>`;
+    modal.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden";
+    view.querySelector("[data-close]").focus();
+  }
+  list.addEventListener("click", e => { const b = e.target.closest("[data-batch]"); if (b) open(b.dataset.batch); });
+  q.addEventListener("input", render); sel.addEventListener("change", render);
+  render();
+  if (params.get("batch") && COAS.some(c => c.batch === params.get("batch"))) open(params.get("batch"));
+});
+</script>
+</body>
+</html>

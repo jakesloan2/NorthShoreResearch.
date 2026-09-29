@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your basket | North Shore</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="assets/favicon.png" type="image/png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><meta name="theme-color" content="#0A0A0C">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="main">
+  <div class="page-head"><div class="container"><div class="crumbs"><a href="index.html">Home</a> / Basket</div><h1>Your basket</h1></div></div>
+  <div class="container cart-page" id="cart-page"></div>
+</main>
+<script src="js/config.js"></script><script src="js/products.js"></script><script src="js/discounts.js"></script>
+<script src="js/cart.js"></script><script src="js/cookies.js"></script><script src="js/main.js"></script>
+<script src="js/age-gate.js"></script><script src="js/offer.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const root = document.getElementById("cart-page");
+  function render() {
+    const t = Cart.totals("standard");
+    if (!t.lines.length) {
+      root.innerHTML = `<div class="panel empty" style="grid-column:1/-1"><p>Your basket is empty.</p><a class="btn btn--primary" href="shop.html">Start shopping</a></div>`; return;
+    }
+    root.innerHTML = `
+      <div class="cart-page__main">
+        ${Cart.progressHTML(t)}
+        <div class="panel">
+          ${t.lines.map(l => Cart.lineHTML(l)).join("")}
+          <div class="step-actions"><a class="btn btn--ghost" href="shop.html">‹ Continue shopping</a><button class="btn btn--ghost" type="button" id="clear">Empty basket</button></div>
+        </div>
+        <div class="panel">${Cart.upsellHTML(t, 3)}</div>
+      </div>
+      <div class="panel summary">
+        <h3>Order summary</h3>
+        ${Cart.nudgeHTML(t)}
+        ${Cart.totalsHTML(t)}
+        ${Cart.couponHTML(t)}
+        <a class="btn btn--primary btn--block btn--lg btn--pill" href="checkout.html">Checkout</a>
+        <p class="note mt-2 text-center">Delivery shown is standard tracked. Express delivery is available at checkout.</p>
+        <div class="pay-marks" aria-label="Accepted payment methods"><span>Visa</span><span>Mastercard</span><span>Amex</span><span>Apple Pay</span><span>Google Pay</span></div>
+      </div>`;
+  }
+  Cart.bind(root);
+  root.addEventListener("click", e => { if (e.target.id === "clear") { Cart.clear(); UI.toast("Basket emptied", "info"); } });
+  document.addEventListener("cart:change", render);
+  render();
+});
+</script>
+</body>
+</html>

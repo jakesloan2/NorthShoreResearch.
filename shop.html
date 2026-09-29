@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop all products | North Shore</title>
+  <link rel="canonical" href="https://YOUR-DOMAIN.co.uk/shop.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="North Shore Research">
+  <meta property="og:url" content="https://YOUR-DOMAIN.co.uk/shop.html">
+  <meta property="og:title" content="Shop all products | North Shore">
+  <meta property="og:description" content="Browse whey protein, creatine, pre-workout, hydration and essentials. Batch-tested, fast UK delivery.">
+  <meta property="og:image" content="https://YOUR-DOMAIN.co.uk/images/social-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="North Shore Research">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shop all products | North Shore">
+  <meta name="twitter:description" content="Browse whey protein, creatine, pre-workout, hydration and essentials. Batch-tested, fast UK delivery.">
+  <meta name="twitter:image" content="https://YOUR-DOMAIN.co.uk/images/social-card.jpg">
+  <meta name="description" content="Browse whey protein, creatine, pre-workout, hydration and essentials. Batch-tested, fast UK delivery.">
+  <link rel="icon" href="assets/favicon.png" type="image/png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><meta name="theme-color" content="#0A0A0C">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="main">
+  <div class="page-head"><div class="container">
+    <div class="crumbs"><a href="index.html">Home</a> / Shop</div>
+    <h1 id="shop-title">All products</h1>
+    <p class="muted mb-0" id="shop-sub">Browse the full range.</p>
+  </div></div>
+
+  <div class="container shop">
+    <aside class="filters" id="filters" aria-label="Filters">
+      <fieldset>
+        <legend>Availability</legend>
+        <label><input type="checkbox" name="instock" value="1"> In stock only</label>
+      </fieldset>
+      <fieldset>
+        <legend>Max price <span class="muted" id="price-out"></span></legend>
+        <input type="range" name="maxprice" min="0" step="1" aria-label="Maximum price">
+      </fieldset>
+      <fieldset>
+        <legend>Tags</legend>
+        <label><input type="checkbox" name="tag" value="Batch tested"> Batch tested</label>
+        <label><input type="checkbox" name="tag" value="Best seller"> Best sellers</label>
+        <label><input type="checkbox" name="tag" value="New"> New in</label>
+      </fieldset>
+      <button class="btn btn--ghost btn--sm" type="button" id="clear">Clear filters</button>
+    </aside>
+
+    <div>
+      <div class="shop__toolbar">
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn btn--secondary btn--sm" type="button" id="toggle-filters" aria-expanded="false" aria-controls="filters">Filters</button>
+          <span class="count" id="count"></span>
+        </div>
+        <label>
+          <span class="visually-hidden">Sort</span>
+          <select class="select" id="sort">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: low to high</option>
+            <option value="price-desc">Price: high to low</option>
+            <option value="name">Name A–Z</option>
+          </select>
+        </label>
+      </div>
+      <div class="chips" id="chips"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </div>
+</main>
+
+<script src="js/config.js"></script><script src="js/products.js"></script><script src="js/discounts.js"></script>
+<script src="js/cart.js"></script><script src="js/cookies.js"></script><script src="js/main.js"></script>
+<script src="js/age-gate.js"></script><script src="js/offer.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(location.search);
+  // Price slider spans the actual catalogue, so nothing is hidden by default
+  const PRICE_MAX = Math.ceil(Math.max(...PRODUCTS.flatMap(p => p.variants.map(v => v.price))));
+  const state = { q: params.get("q") || "", instock: false, maxprice: PRICE_MAX, tags: [], sort: "featured" };
+  const filters = document.getElementById("filters");
+  const range = filters.querySelector("[name=maxprice]");
+  range.max = PRICE_MAX; range.value = PRICE_MAX;
+  const out = document.getElementById("price-out");
+
+  function readForm() {
+    state.instock = filters.querySelector("[name=instock]").checked;
+    state.maxprice = +range.value;
+    state.tags = [...filters.querySelectorAll("[name=tag]:checked")].map(i => i.value);
+    state.sort = document.getElementById("sort").value;
+    out.textContent = state.maxprice >= PRICE_MAX ? "" : `up to ${Cart.money(state.maxprice)}`;
+  }
+  function apply() {
+    readForm();
+    let list = PRODUCTS.filter(p => {
+      const minPrice = Math.min(...p.variants.map(v => v.price));
+      if (state.q && !(p.name + " " + p.short).toLowerCase().includes(state.q.toLowerCase())) return false;
+      if (state.instock && !p.variants.some(v => v.stock > 0)) return false;
+      if (minPrice > state.maxprice) return false;
+      if (state.tags.length && !state.tags.every(t => p.badges.includes(t))) return false;
+      return true;
+    });
+    const minP = p => Math.min(...p.variants.map(v => v.price));
+    const sorters = { "price-asc": (a, b) => minP(a) - minP(b), "price-desc": (a, b) => minP(b) - minP(a), name: (a, b) => a.name.localeCompare(b.name), featured: () => 0 };
+    list.sort(sorters[state.sort]);
+    document.getElementById("grid").innerHTML = list.length ? list.map(UI.productCard).join("") : `<div class="empty" style="grid-column:1/-1"><p>No products match those filters.</p><button class="btn btn--secondary" id="clear2">Clear filters</button></div>`;
+    document.getElementById("count").textContent = `${list.length} product${list.length === 1 ? "" : "s"}`;
+    const chips = [];
+    if (state.q) chips.push(["q", `Search: “${state.q}”`]);
+    if (state.instock) chips.push(["instock", "In stock"]);
+    if (state.maxprice < PRICE_MAX) chips.push(["maxprice", `Under ${Cart.money(state.maxprice)}`]);
+    state.tags.forEach(t => chips.push(["tag:" + t, t]));
+    document.getElementById("chips").innerHTML = chips.map(([k, l]) => `<span class="chip">${l}<button type="button" data-chip="${k}" aria-label="Remove ${l}">×</button></span>`).join("");
+    const title = state.q ? `Results for “${state.q}”` : "All products";
+    document.getElementById("shop-title").textContent = title;
+    document.getElementById("shop-sub").textContent = "Browse the full range.";
+    document.title = `${title} | North Shore`;
+  }
+  filters.addEventListener("change", apply);
+  range.addEventListener("input", apply);
+  document.getElementById("sort").addEventListener("change", apply);
+  document.getElementById("toggle-filters").addEventListener("click", e => { const o = filters.classList.toggle("is-open"); e.currentTarget.setAttribute("aria-expanded", o); });
+  function clearAll() { filters.querySelectorAll("input[type=checkbox]").forEach(i => i.checked = false); range.value = PRICE_MAX; state.q = ""; apply(); }
+  document.getElementById("clear").addEventListener("click", clearAll);
+  document.addEventListener("click", e => {
+    if (e.target.id === "clear2") clearAll();
+    const c = e.target.closest("[data-chip]"); if (!c) return;
+    const k = c.dataset.chip;
+    if (k === "q") state.q = "";
+    else if (k === "instock") filters.querySelector("[name=instock]").checked = false;
+    else if (k === "maxprice") range.value = PRICE_MAX;
+    else if (k.startsWith("cat:")) filters.querySelector(`[name=cat][value="${k.slice(4)}"]`).checked = false;
+    else if (k.startsWith("tag:")) filters.querySelector(`[name=tag][value="${k.slice(4)}"]`).checked = false;
+    apply();
+  });
+  apply();
+});
+</script>
+</body>
+</html>
