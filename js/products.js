@@ -158,7 +158,7 @@ window.PRODUCTS = [
     category: "All",
     form: "Vial",
     tint: "rgba(240,56,78,.25)",
-    short: "Hydrolysed collagen. [X] servings.",
+    short: "Molecular formula - C21H27N7O14P2.",
     description: "NAD+ is nicotinamide adenine dinucleotide, a coenzyme present in every living cell and central to redox reactions. In laboratory settings research examines its role as a substrate for sirtuins and PARP enzymes, and its influence on mitochondrial function and cellular energy metabolism in in vitro models.",
     badges: [],
     options: { Strength: ["1000 mg"] },
