@@ -60,8 +60,8 @@ window.SITE = {
   footerNote: "",                                  // small print under the footer; leave "" to hide
   /* Disclaimer block below the footer. Set heading to "" to hide it. */
   footerDisclaimer: {
-    heading: "Caffeine and food supplements",
-    body: "Products on this site are food supplements, not medicines, and are intended for adults. Food supplements should not be used as a substitute for a varied and balanced diet and a healthy lifestyle. Do not exceed the stated dose. Products containing caffeine carry the statutory warning on the label: 'High caffeine content. Not recommended for children or pregnant or breast-feeding women', with the caffeine content stated per serving. If you are pregnant, breast-feeding, taking medication or under medical supervision, speak to a doctor or pharmacist before use. Always read the label. Keep out of reach of children."
+    heading: "UK research-use disclaimer",
+    body: "The statements on this website have not been evaluated by the Medicines and Healthcare products Regulatory Agency (MHRA). The products and information provided by North Shore Research are not intended to diagnose, treat, cure, or prevent any disease.North Shore Research is a supplier of materials for research, laboratory, and analytical use only. We are not a pharmacy and do not supply products for medicinal use. Our products are not intended for human or animal consumption, administration, or use. No product supplied by North Shore Research is marketed or supplied as a medicinal product, and no product is intended to replace professional medical advice, diagnosis, or treatment."
   },
   /* Service promises shown on the site. Only state what is true for
      your business — these appear as facts to customers. */
@@ -86,7 +86,7 @@ window.SITE = {
      products that are labelled as not recommended for under-18s. */
   ageGate: {
     enabled: true,
-    minAge: 18,
+    minAge: 21,
     rememberDays: 30,
     exitUrl: "https://www.google.co.uk/"
   },
