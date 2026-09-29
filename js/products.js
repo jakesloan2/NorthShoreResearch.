@@ -154,7 +154,7 @@ window.PRODUCTS = [
   {
     id: "collagen",
     image: "images/products/collagen.jpg",
-    name: "Collagen",
+    name: "NAD+",
     category: "All",
     form: "Vial",
     tint: "rgba(240,56,78,.25)",
