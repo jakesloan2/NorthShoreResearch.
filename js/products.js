@@ -93,7 +93,7 @@ window.PRODUCTS = [
     // High-caffeine products must carry the statutory warning on the label:
     // "High caffeine content. Not recommended for children or pregnant or
     // breast-feeding women", with the amount in mg per serving.
-    description: "The Wolverine Blend is a high-concentration research complex combining Pentadecapeptide BPC-157 and Thymosin Beta-4 (TB-500). This formulation is designed to study the synergistic interaction between angiogenic signaling and actin-sequestering pathways. Researchers utilize this blend to observe accelerated cellular migration and the structural repair of musculoskeletal tissue models in vitro.",
+    description: "The Wolverine Blend is a high-concentration research complex combining Pentadecapeptide BPC-157 and Thymosin Beta-4 (TB-500). This formulation is designed to study the synergistic interaction between angiogenic signaling and actin-sequestering pathways. Researchers utilise this blend to observe accelerated cellular migration and the structural repair of musculoskeletal tissue models in vitro.",
     badges: [],
     options: { Strength: ["10/10 mg"] },
     variants: [
@@ -107,12 +107,12 @@ window.PRODUCTS = [
     category: "All",
     form: "vial",
     tint: "rgba(200,200,210,.35)",
-    short: "Sodium, potassium and magnesium. [X] servings.",
-    description: "[SUPPLIER DESCRIPTION — list the minerals and the amount of each per serving.]",
+    short: "Molecular formula - C14H22N6O4Cu.",
+    description: "GHK-Cu is the tripeptide glycyl-L-histidyl-L-lysine in complex with copper(II). In laboratory settings it is studied as a copper-binding ligand, with research focusing on extracellular matrix remodelling, collagen and metalloproteinase expression, and antioxidant signalling in fibroblast models.",
     badges: ["New"],
-    options: { Strength: ["1000 mg"] },
+    options: { Strength: ["100 mg"] },
     variants: [
-      { sku: "ELE-1000MG", options: { Strength: "1000 mg" }, price: 18.99, stock: 30 }
+      { sku: "ELE-1000MG", options: { Strength: "100 mg" }, price: 39.99, stock: 30 }
     ]
   },
   {
@@ -122,14 +122,14 @@ window.PRODUCTS = [
     category: "All",
     form: "Vial",
     tint: "rgba(216,20,44,.25)",
-    short: "[X] tablets. [X] servings.",
+    short: "Molecular formula - C₁₀₁H₁₅₂N₂₈O₂₂S₂.",
     // Vitamins and minerals have legal maximum levels and must show the
     // % NRV per serving on the label. Take these from your supplier.
-    description: "[SUPPLIER DESCRIPTION — name the vitamin, the amount per serving and the % NRV.]",
+    description: "MOTS-c (Mitochondrial Open Reading Frame of the 12S rRNA-c) is a 16-amino acid peptide encoded by the mitochondrial genome rather than the cell nucleus. In laboratory settings, it is studied as a "mitokine" that facilitates mitochondrial-nuclear communication. Research primarily explores its role in activating the AMPK pathway, modulating the folate-methionine cycle, and its influence on metabolic homeostasis and cellular stress resistance in various animal and in vitro models.",
     badges: [],
-    options: { Strength: ["1000 mg"] },
+    options: { Strength: ["10 mg"] },
     variants: [
-      { sku: "VIT-1000MG", options: { Strength: "1000 mg" }, price: 14.99, stock: 50 }
+      { sku: "VIT-1000MG", options: { Strength: "10 mg" }, price: 39.99, stock: 50 }
     ]
   },
   {
@@ -139,16 +139,16 @@ window.PRODUCTS = [
     category: "All",
     form: "Vial",
     tint: "rgba(120,120,130,.35)",
-    short: "[X] capsules. [X] servings.",
+    short: "",
     // CHECK WITH YOUR SUPPLIER WHAT'S IN THIS.
     // Melatonin is a prescription-only medicine in the UK and cannot be
     // sold as a supplement. Magnesium, glycine, L-theanine and similar
     // are fine. See the note in the README.
-    description: "[SUPPLIER DESCRIPTION — list the active ingredients and the amount of each per serving.]",
+    description: "MT-2 is a cyclic lactam analogue of alpha-melanocyte-stimulating hormone and a non-selective melanocortin receptor ligand. In laboratory settings research examines its activity across the MC1R, MC3R and MC4R subtypes and the cyclic AMP signalling that follows receptor binding.",
     badges: [],
-    options: { Strength: ["500 mg"] },
+    options: { Strength: ["10 mg"] },
     variants: [
-      { sku: "SLP-500MG", options: { Strength: "500 mg" }, price: 19.99, stock: 30 }
+      { sku: "SLP-500MG", options: { Strength: "10 mg" }, price: 39.99, stock: 30 }
     ]
   },
   {
@@ -159,11 +159,11 @@ window.PRODUCTS = [
     form: "Vial",
     tint: "rgba(240,56,78,.25)",
     short: "Hydrolysed collagen. [X] servings.",
-    description: "[SUPPLIER DESCRIPTION — say what type and source, e.g. hydrolysed bovine or marine collagen peptides.]",
+    description: "NAD+ is nicotinamide adenine dinucleotide, a coenzyme present in every living cell and central to redox reactions. In laboratory settings research examines its role as a substrate for sirtuins and PARP enzymes, and its influence on mitochondrial function and cellular energy metabolism in in vitro models.",
     badges: [],
     options: { Strength: ["1000 mg"] },
     variants: [
-      { sku: "COL-1000MG", options: { Strength: "1000 mg" }, price: 29.99, stock: 20 }
+      { sku: "COL-1000MG", options: { Strength: "1000 mg" }, price: 59.99, stock: 20 }
     ]
   },
   {
@@ -173,12 +173,12 @@ window.PRODUCTS = [
     category: "All",
     form: "Vial",
     tint: "rgba(240,56,78,.3)",
-    short: "[X] softgels. [X] servings.",
-    description: "[SUPPLIER DESCRIPTION — state the EPA and DHA content per serving. EPA and DHA contribute to the normal function of the heart; the beneficial effect is obtained with a daily intake of 250 mg.]",
+    short: "",
+    description: "Bacteriostatic water is sterile water containing benzyl alcohol as a bacteriostatic preservative, measured at 0.91% on the current lot. It is used in the laboratory to reconstitute lyophilized material for in vitro work, and the preservative allows a reconstituted vial to be drawn from more than once.",
     badges: [],
-    options: { Strength: ["1000 mg"] },
+    options: { Strength: ["10 ml"] },
     variants: [
-      { sku: "OM3-1000MG", options: { Strength: "1000 mg" }, price: 17.99, stock: 45 }
+      { sku: "OM3-1000MG", options: { Strength: "10 ml" }, price: 15.00, stock: 45 }
     ]
   }
 ];
